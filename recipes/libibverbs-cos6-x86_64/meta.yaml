@@ -1,0 +1,29 @@
+{% set name = "libibverbs" %}
+{% set version = "1.1.8" %}
+
+package:
+  name: {{ name }}-cos6-x86_64
+  version: {{ version }}
+
+source:
+  - url: http://mirror.centos.org/centos/6.10/os/x86_64/Packages/{{ name }}-{{ version }}-4.el6.x86_64.rpm
+    sha256: 706e5770d5c3e6c06f7c47a88936edbee56a003f31186ea4dd7e1de8b87903ad
+    folder: binary
+  - url: http://vault.centos.org/6.10/os/Source/SPackages/{{ name }}-{{ version }}-4.el6.src.rpm
+    sha256: a575eeb776f7cdca59ef1a745f601d8503702420b36c30088c9e26ede32c0a3f
+    folder: source
+
+build:
+  missing_dso_whitelist:
+    - '*'
+
+outputs:
+  - name: {{ name }}-cos6-x86_64
+    noarch: generic
+
+    about:
+      home: https://www.openfabrics.org/
+      license: GPL 2 or BSD-2-Clause
+      summary: |
+        A library that allows programs to use RDMA "verbs" for direct access
+        to RDMA (currently InfiniBand and iWARP) hardware from userspace.
