@@ -1,0 +1,5 @@
+ucx_proc_type:
+- cpu
+- gpu
+nvcc_compiler:
+- nvcc
