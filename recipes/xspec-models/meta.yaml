@@ -1,0 +1,85 @@
+{% set name = "xspec-models" %}
+{% set version = "6.25" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  #url:  http://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft{{version}}/heasoft-{{version}}src.tar.gz
+  url: file:///workdir/heasoft-{{version}}src.tar.gz
+  fn: heasoft-{{version}}src.tar.gz
+  #md5: 91dd413c461845aa8db01ddac6a6a113
+  md5: 3b76d4acefde9a176e77ae1603613790
+#  sha256: a90b26b1722357de1109873e169bbc84ae54636d144bbe01414ebb90e1644d4fOB
+
+
+build:
+  number: 0
+  skip: true  # [win]
+  # If the installation is complex, or different between Unix and Windows, use separate bld.bat and build.sh files instead of this key.
+  # By default, the package will be built for the Python versions supported by conda-forge and for all major OSs.
+  # Add the line "skip: True  # [py<35]" (for example) to limit to Python 3.5 and newer, or "skip: True  # [not win]" to limit to Windows.
+  # Note: --no-deps is currently required due to https://github.com/conda/conda-build/issues/3254
+  # Once resolved, it should be removed.
+  #script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+
+requirements:
+  build:
+    # if your project compiles code (such as a C extension) then add the required compilers as separate entries here.
+    # compilers are named 'c', 'cxx' and 'fortran'.
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}
+    
+  host:
+    - ncurses 5.*
+    - readline
+    - perl
+#    - cfitsio
+#    - wcslib
+#    - ccfits
+  run:
+    - ncurses
+    - readline
+    - perl
+    - cfitsio
+    - ccfits
+    - wcslib
+    
+test:
+  # Some package might need a `test/commands` key to check CLI.
+  # List all the packages/modules that `run_test.py` imports.
+  # imports:
+  #   - simplejson
+  #   - simplejson.tests
+
+about:
+  home: https://heasarc.gsfc.nasa.gov/xanadu/xspec/
+  # Remember to specify the license variants for BSD, Apache, GPL, and LGLP.
+  # Prefer the short version, e.g: GPL-2.0 instead of GNU General Public License version 2.0
+  # See https://opensource.org/licenses/alphabetical
+  license: LGPL-2.1
+  # The license_family, i.e. "BSD" if license is "BSD-3-Clause". (optional)
+  license_family: LGPL
+  # It is strongly encouraged to include a license file in the package,
+  # (even if the license doesn't require it) using the license_file entry.
+  # See http://conda.pydata.org/docs/building/meta-yaml.html#license-file
+  license_file: LICENSE
+  summary: 'An x-ray spectral analysis software providing a plethora of models and fitting routines'
+
+  # The remaining entries in this section are optional, but recommended
+  description: |
+    A build of XSPEC including only the models. This allows for packages that
+    depended on XSPEC to build against this without having to include the entire
+    framework.
+    
+#  doc_url: http://simplejson.readthedocs.io/
+#  dev_url: https://github.com/simplejson/simplejson
+
+extra:
+  recipe-maintainers:
+    # GitHub IDs for maintainers of the recipe.
+    # Always check with the people listed below if they are OK becoming maintainers of the recipe. (There will be spam!)
+    - grburgess
+    - threeml
